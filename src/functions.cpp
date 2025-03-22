@@ -1,5 +1,8 @@
 #include <iostream>
 #include "functions.h"
+#include <mutex>
+
+std::mutex print_mutex;
 
 void fib(long x){
   long sum = 0;
@@ -9,7 +12,8 @@ void fib(long x){
     z = y;
     y = sum;
 
-    std::cout << "thread1: " << sum << std::endl;
+    std::lock_guard<std::mutex> guard(print_mutex);
+    std::cout << "[T1] fib(): " << sum << std::endl;
   }
 }
 
@@ -17,7 +21,8 @@ void mult(long n){
   int count = n;
   for (int i = 0; i < count; i++)
   {
-    std::cout << "thread2: " << n << std::endl;
+    std::lock_guard<std::mutex> guard(print_mutex);
+    std::cout << "[T2] mult(): " << n << std::endl;
     n = n << 1;
   }
   
