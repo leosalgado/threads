@@ -1,5 +1,4 @@
 #include <iostream>
-#include "functions.h"
 #include <mutex>
 
 std::mutex print_mutex;

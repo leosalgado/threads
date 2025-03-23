@@ -8,11 +8,12 @@ int main(){
   long num;
   
   std::cin >> num;
+  
+  std::cout << "Starting..." << std::endl;
 
   std::thread first (fib, num);
   std::thread second (mult, num);
 
-  std::cout << "Starting..." << std::endl;
 
   first.join();
   second.join();
