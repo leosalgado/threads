@@ -3,10 +3,10 @@
 
 #include <shaper.hpp>
 
-#define INPUT_FILE "../data/input/dataset.csv"
-#define OUTPUT_PATH "../data/output/"
-
 int main() {
+  const std::string INPUT_FILE = "../data/input/dataset.csv";
+  const std::string OUTPUT_PATH = "../data/output/";
+
   csv::Shaper shaper;
 
   auto data = shaper.read_csv(INPUT_FILE);
