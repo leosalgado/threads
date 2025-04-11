@@ -1,25 +1,18 @@
 #include <iostream>
-#include <thread>
-#include "functions.h"
+#include <string>
 
+#include <shaper.hpp>
 
-int main(){
-  
-  long num;
-  
-  std::cin >> num;
-  
-  std::cout << "Starting..." << std::endl;
+#define INPUT_FILE "../data/input/dataset.csv"
 
-  std::thread first (fib, num);
-  std::thread second (mult, num);
+int main() {
+  csv::Shaper shaper;
 
+  auto dados = shaper.read_csv(INPUT_FILE);
 
-  first.join();
-  second.join();
-
-  std::cout << "Finished" << std::endl;
-
+  for (const auto &[state, city] : dados) {
+    std::cout << state << ", " << city << std::endl;
+  }
 
   return 0;
 }
