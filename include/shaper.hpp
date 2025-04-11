@@ -5,11 +5,15 @@
 #include <vector>
 namespace csv {
 
+struct CsvData {
+  std::vector<std::pair<std::string, std::string>> rows;
+  std::pair<std::string, std::string> header;
+};
+
 class Shaper {
 
 public:
-  std::vector<std::pair<std::string, std::string>>
-  read_csv(const std::string &filepath);
+  CsvData read_csv(const std::string &filepath);
 };
 
 } // namespace csv

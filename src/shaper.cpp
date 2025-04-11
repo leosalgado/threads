@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -8,18 +9,26 @@
 
 namespace csv {
 
-std::vector<std::pair<std::string, std::string>>
-Shaper::read_csv(const std::string &filepath) {
+CsvData Shaper::read_csv(const std::string &filepath) {
   std::ifstream file(filepath);
-  std::vector<std::pair<std::string, std::string>> data;
+  CsvData data;
   std::string line;
+
+  if (std::getline(file, line)) {
+    std::stringstream ss(line);
+    std::string first, second;
+
+    if (std::getline(ss, first, ',') && std::getline(ss, second)) {
+      data.header = {first, second};
+    }
+  }
 
   while (std::getline(file, line)) {
     std::stringstream ss(line);
     std::string first, second;
 
     if (std::getline(ss, first, ',') && std::getline(ss, second)) {
-      data.emplace_back(first, second);
+      data.rows.emplace_back(first, second);
     }
   }
   return data;
