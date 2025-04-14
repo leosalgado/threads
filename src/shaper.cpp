@@ -34,4 +34,24 @@ CsvData Shaper::read_csv(const std::string &filepath) {
   return data;
 }
 
+void Shaper::write_csv(const CsvData &input_file, const std::string &filepath,
+                       const std::string &header_name) {
+  std::string line;
+
+  int i = 1;
+  if (input_file.header.first == header_name) {
+    std::ofstream new_file(filepath + "cod_estado.csv");
+    std::pair<std::string, std::string> previous;
+
+    new_file << "cod,estado" << std::endl;
+    for (auto &row : input_file.rows) {
+      if (row.first != previous.first) {
+        new_file << i << "," << row.first << std::endl;
+        previous.first = row.first;
+        i++;
+      }
+    }
+  }
+}
+
 } // namespace csv

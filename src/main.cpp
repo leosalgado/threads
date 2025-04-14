@@ -11,11 +11,7 @@ int main() {
 
   auto data = shaper.read_csv(INPUT_FILE);
 
-  std::cout << data.header.first << ", " << data.header.second << std::endl;
-
-  for (const auto &[state, city] : data.rows) {
-    std::cout << state << ", " << city << std::endl;
-  }
+  shaper.write_csv(data, OUTPUT_PATH, "estado");
 
   return 0;
 }
