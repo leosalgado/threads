@@ -9,17 +9,9 @@
 
 #include <shaper.hpp>
 
-std::unordered_map<std::string, std::string> to_map(const csv::CsvData &csv) {
-  std::unordered_map<std::string, std::string> map;
-  for (const auto &row : csv.rows) {
-    map[row.second] = row.first;
-  }
-  return map;
-}
-
 namespace csv {
 
-CsvData Shaper::read_csv(const std::string &filepath) {
+CsvData read_csv(const std::string &filepath) {
   std::ifstream file(filepath);
   CsvData data;
   std::string line;
@@ -44,8 +36,7 @@ CsvData Shaper::read_csv(const std::string &filepath) {
   return data;
 }
 
-void Shaper::write_state(const CsvData &input_file,
-                         const std::string &filepath) {
+void write_state(const CsvData &input_file, const std::string &filepath) {
   int i = 1;
   std::ofstream new_file(filepath + "cod_estado.csv");
   std::pair<std::string, std::string> previous;
@@ -60,8 +51,7 @@ void Shaper::write_state(const CsvData &input_file,
   }
 }
 
-void Shaper::write_city(const CsvData &input_file,
-                        const std::string &filepath) {
+void write_city(const CsvData &input_file, const std::string &filepath) {
   int i = 1;
   std::ofstream new_file(filepath + "cod_cidade.csv");
   std::pair<std::string, std::string> previous;
@@ -76,9 +66,16 @@ void Shaper::write_city(const CsvData &input_file,
   }
 }
 
-void Shaper::normalize_csv(const CsvData &data, const CsvData &state_csv,
-                           const CsvData &city_csv,
-                           const std::string &filepath) {
+std::unordered_map<std::string, std::string> to_map(const csv::CsvData &csv) {
+  std::unordered_map<std::string, std::string> map;
+  for (const auto &row : csv.rows) {
+    map[row.second] = row.first;
+  }
+  return map;
+}
+
+void normalize_csv(const CsvData &data, const CsvData &state_csv,
+                   const CsvData &city_csv, const std::string &filepath) {
   std::ofstream new_file(filepath + "estado_cidade.csv");
 
   auto state_map = to_map(state_csv);
