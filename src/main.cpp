@@ -11,7 +11,8 @@ int main() {
 
   auto data = shaper.read_csv(INPUT_FILE);
 
-  shaper.write_csv(data, OUTPUT_PATH, "estado");
+  shaper.write_state(data, OUTPUT_PATH);
+  shaper.write_city(data, OUTPUT_PATH);
 
   return 0;
 }

@@ -14,8 +14,8 @@ class Shaper {
 
 public:
   CsvData read_csv(const std::string &filepath);
-  void write_csv(const CsvData &input_file, const std::string &filepath,
-                 const std::string &header_name);
+  void write_state(const CsvData &input_file, const std::string &filepath);
+  void write_city(const CsvData &input_file, const std::string &filepath);
 };
 
 } // namespace csv

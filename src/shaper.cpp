@@ -34,22 +34,36 @@ CsvData Shaper::read_csv(const std::string &filepath) {
   return data;
 }
 
-void Shaper::write_csv(const CsvData &input_file, const std::string &filepath,
-                       const std::string &header_name) {
+void Shaper::write_state(const CsvData &input_file,
+                         const std::string &filepath) {
   std::string line;
 
   int i = 1;
-  if (input_file.header.first == header_name) {
-    std::ofstream new_file(filepath + "cod_estado.csv");
-    std::pair<std::string, std::string> previous;
+  std::ofstream new_file(filepath + "cod_estado.csv");
+  std::pair<std::string, std::string> previous;
 
-    new_file << "cod,estado" << std::endl;
-    for (auto &row : input_file.rows) {
-      if (row.first != previous.first) {
-        new_file << i << "," << row.first << std::endl;
-        previous.first = row.first;
-        i++;
-      }
+  new_file << "cod,estado" << std::endl;
+  for (auto &row : input_file.rows) {
+    if (row.first != previous.first) {
+      new_file << i << "," << row.first << std::endl;
+      previous.first = row.first;
+      i++;
+    }
+  }
+}
+
+void Shaper::write_city(const CsvData &input_file,
+                        const std::string &filepath) {
+  int i = 1;
+  std::ofstream test_file(filepath + "cod_cidade.csv");
+  std::pair<std::string, std::string> previous;
+
+  test_file << "cod,cidade" << std::endl;
+  for (auto &row : input_file.rows) {
+    if (row.second != previous.second) {
+      test_file << i << "," << row.second << std::endl;
+      previous.second = row.second;
+      i++;
     }
   }
 }
