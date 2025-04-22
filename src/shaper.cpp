@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <fstream>
 #include <iostream>
+#include <mutex>
+#include <omp.h>
 #include <sstream>
 #include <string>
 #include <unordered_map>
@@ -8,6 +10,8 @@
 #include <vector>
 
 #include <shaper.hpp>
+
+std::mutex file_mutex;
 
 namespace csv {
 
@@ -82,6 +86,8 @@ void normalize_csv(const CsvData &data, const CsvData &state_csv,
   auto city_map = to_map(city_csv);
 
   new_file << "cod_estado,cod_cidade" << std::endl;
+
+#pragma omp parallel for
   for (const auto &row : data.rows) {
     std::string state_name = row.first;
     std::string city_name = row.second;
@@ -89,7 +95,10 @@ void normalize_csv(const CsvData &data, const CsvData &state_csv,
     std::string state_code = state_map[state_name];
     std::string city_code = city_map[city_name];
 
-    new_file << state_code << "," << city_code << std::endl;
+    {
+      std::lock_guard<std::mutex> lock(file_mutex);
+      new_file << state_code << "," << city_code << std::endl;
+    }
   }
 }
 
