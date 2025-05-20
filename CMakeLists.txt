@@ -11,11 +11,12 @@ add_library(shaper STATIC src/shaper.cpp)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-target_link_libraries(${PROJECT_NAME} shaper)
+target_link_libraries(${PROJECT_NAME} PUBLIC shaper)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
     target_link_libraries(shaper PUBLIC OpenMP::OpenMP_CXX)
+    target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX)
 endif()
