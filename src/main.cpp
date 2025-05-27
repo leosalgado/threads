@@ -14,5 +14,11 @@ int main() {
   double end = omp_get_wtime();
   std::cout << "Reading time: " << (end - start) << "s" << std::endl;
 
+  start = omp_get_wtime();
+  save_unique_values_per_column(data, OUTPUT_PATH);
+  end = omp_get_wtime();
+  std::cout << "Saving unique columns time: " << (end - start) << "s"
+            << std::endl;
+
   return 0;
 }
