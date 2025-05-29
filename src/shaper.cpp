@@ -52,8 +52,15 @@ void save_unique_values_per_column(const CsvData &data,
 
   size_t num_columns = data.rows[0].size();
 
+  std::set<size_t> drop_columns = {0, 9, 10, 11, 12, 13, 14, 15, 16, 21, 22};
+
 #pragma omp parallel for
   for (size_t col = 0; col < num_columns; ++col) {
+
+    if (drop_columns.find(col) != drop_columns.end()) {
+      continue;
+    }
+
     std::set<std::string> unique_values;
 
     for (size_t row = 1; row < data.rows.size(); ++row) {
